@@ -263,8 +263,12 @@ class PhpSIP
       }
       // running from command line
       else
-      {
-        $addr = gethostbynamel(php_uname('n'));
+      { 
+        // Get local ip address
+        $addr = $this->getLocalIPAddress();
+        if(!$addr) {
+            $addr = gethostbynamel(php_uname('n'));
+        }
         
         if (!is_array($addr) || !isset($addr[0]) || substr($addr[0],0,3) == '127')
         {
@@ -1726,6 +1730,29 @@ class PhpSIP
     
     return $output;
   }
+
+  /**
+   *  Get Local ip address from PHP CLI
+   *
+   * @return Array or false
+   */
+  private function getLocalIPAddress() {
+    if(PHP_OS === 'Linux') {
+        exec("ip addr", $output);
+        foreach($output as $line) {
+            $line = trim($line);
+            if(strpos($line, 'inet') !== false && strpos($line, 'inet6') === false) {
+                $pieces = explode(" ", $line);
+                if(strpos($pieces[1], '127') === false) {
+                    $ips = explode("/", $pieces[1]);
+                    return $ips;
+                }
+            }
+        }
+    }
+    return false;
+  }
+ 
 }
 
 ?>
