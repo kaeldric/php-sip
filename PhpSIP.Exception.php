@@ -1,6 +1,6 @@
 <?php
 /**
- * (c) 2007-2016 Chris Maciejewski
+ * (c) 2007-2009 Chris Maciejewski
  * 
  * Permission is hereby granted, free of charge, to any person obtaining 
  * a copy of this software and associated documentation files 
@@ -27,12 +27,15 @@
  * PHP SIP UAC class - Exception
  * 
  * @ingroup  API
- * @author Chris Maciejewski <chris@level7systems.co.uk>
+ * @author Chris Maciejewski <chris@wima.co.uk>
+ * 
+ * @version    SVN: $Id: PhpSIP.class.php 22 2009-10-21 14:16:31Z chris.maciejewski $
  */
-class PhpSIPException extends Exception
+class PhpSIPException extends \Exception
 {
   public function __construct($message, $code = 0)
   {
     parent::__construct($message,$code);
   }   
 }
+
